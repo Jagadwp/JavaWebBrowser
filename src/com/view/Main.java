@@ -34,7 +34,8 @@ public class Main {
 		case 3:
 			String downloadLink= sc.nextLine();
 			//Input Direktori kemana file harus disimpan 
-			File out = new File("C:\\Users\\Example\\Dowloads\\");
+			String dir = sc.nextLine();
+			File out = new File(dir);
 			new Thread(new download(downloadLink, out)).start();
 			// System.out.println("Wednesday");
 			break;
