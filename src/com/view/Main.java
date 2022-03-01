@@ -2,6 +2,7 @@ package com.view;
 
 import com.controller.*;
 import com.controller.webcontent.UrlConnectionReader;
+import com.controller.download.download;
 
 import java.net.*;
 import java.util.Scanner;
@@ -31,7 +32,11 @@ public class Main {
 			System.out.println("Tuesday");
 			break;
 		case 3:
-			System.out.println("Wednesday");
+			String downloadLink= sc.nextLine();
+			//Input Direktori kemana file harus disimpan 
+			File out = new File("C:\\Users\\Example\\Dowloads\\");
+			new Thread(new download(downloadLink, out)).start();
+			// System.out.println("Wednesday");
 			break;
 		default:
 			System.out.println("Wrong input");
