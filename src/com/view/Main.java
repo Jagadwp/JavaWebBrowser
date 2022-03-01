@@ -24,8 +24,9 @@ public class Main {
 		case 1:
 			System.out.println("Enter URI:");
 			String uri = sc.nextLine();
+			String messages = errorMessages.getUrl(uri);
 			String output = UrlConnectionReader.getUrlContents(uri);
-			System.out.println("Web Content:\n" + output);
+			System.out.println("Web Content:\n" + messages +"\n" + output);
 //			showClickableLinksList();
 			break;
 		case 2:
