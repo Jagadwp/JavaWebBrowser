@@ -30,8 +30,8 @@ public class download implements Runnable {
 				bout.write(buffer, 0, read);
 				downloaded += read;
 				percentDownloaded = (downloaded*100)/fileSize;
-				String percent = String.format("0.4f", percentDownloaded);
-				System.out.println("Downloaded"+percent+"% of a file");
+				String percent = String.format("%.4f", percentDownloaded);
+				System.out.println("Downloaded "+percent+"% of a file");
 				
 			}
 			bout.close();
