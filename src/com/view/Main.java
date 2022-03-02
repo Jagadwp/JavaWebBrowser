@@ -2,6 +2,7 @@ package com.view;
 
 import com.controller.*;
 import com.controller.webcontent.UrlConnectionReader;
+import com.controller.download.download;
 
 import java.net.*;
 import java.util.Scanner;
@@ -20,20 +21,27 @@ public class Main {
 		}
 
 		switch (featureNumber) {
-			case 1:
-				System.out.println("Enter URI:");
-				String uri = sc.nextLine();
-				String output = UrlConnectionReader.getUrlContents(uri);
-				System.out.println("Web Content:\n" + output);
-				break;
-			case 2:
-				System.out.println("Tuesday");
-				break;
-			case 3:
-				System.out.println("Wednesday");
-				break;
-			default:
-				System.out.println("Wrong input");
+		case 1:
+			System.out.println("Enter URI:");
+			String uri = sc.nextLine();
+			String messages = errorMessages.getUrl(uri);
+			String output = UrlConnectionReader.getUrlContents(uri);
+			System.out.println("Web Content:\n" + messages +"\n" + output);
+//			showClickableLinksList();
+			break;
+		case 2:
+			System.out.println("Tuesday");
+			break;
+		case 3:
+			String downloadLink= sc.nextLine();
+			//Input Direktori kemana file harus disimpan 
+			String dir = sc.nextLine();
+			File out = new File(dir);
+			new Thread(new download(downloadLink, out)).start();
+			// System.out.println("Wednesday");
+			break;
+		default:
+			System.out.println("Wrong input");
 		}
 
 		sc.close();
