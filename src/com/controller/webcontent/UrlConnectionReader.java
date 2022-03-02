@@ -23,7 +23,7 @@ public class UrlConnectionReader {
 				content.append(line + "\n");
 				
 				String lineTemp = line.toString();
-				if (lineTemp.contains("<a href=\"https://")) {
+				if (lineTemp.contains("<a href=\"http")) {
 					lineTemp = extractLink(lineTemp);
 					links.append(lineTemp + "\n");
 				}
@@ -44,7 +44,7 @@ public class UrlConnectionReader {
 		StringBuilder url = new StringBuilder();
   
         String regex
-            = "\\b((?:https?|ftp|file):"
+            = "\\b((?:https?|ftp|file|http):"
               + "//[-a-zA-Z0-9+&@#/%?="
               + "~_|!:, .;]*[-a-zA-Z0-9+"
               + "&@#/%=~_|])";
