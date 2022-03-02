@@ -1,10 +1,10 @@
 package com.view;
 
-import com.controller.*;
+import com.controller.webcontent.HttpBasicAuth;
 import com.controller.webcontent.UrlConnectionReader;
 import com.controller.download.download;
+import com.controller.errorMessage.errorMessages;
 
-import java.net.*;
 import java.util.Scanner;
 import java.io.*;
 
@@ -20,28 +20,49 @@ public class Main {
 			e.printStackTrace();
 		}
 
+		String uri;
+		int status;
+
 		switch (featureNumber) {
-		case 1:
-			System.out.println("Enter URI:");
-			String uri = sc.nextLine();
-			String messages = errorMessages.getUrl(uri);
-			String output = UrlConnectionReader.getUrlContents(uri);
-			System.out.println("Web Content:\n" + messages +"\n" + output);
-//			showClickableLinksList();
-			break;
-		case 2:
-			System.out.println("Tuesday");
-			break;
-		case 3:
-			String downloadLink= sc.nextLine();
-			//Input Direktori kemana file harus disimpan 
-			String dir = sc.nextLine();
-			File out = new File(dir);
-			new Thread(new download(downloadLink, out)).start();
-			// System.out.println("Wednesday");
-			break;
-		default:
-			System.out.println("Wrong input");
+			case 1:
+				System.out.println("Enter URI:");
+				uri = sc.nextLine();
+				status = errorMessages.getUrl(uri);
+
+				if (status >= 200 && status < 400) {
+					String output = UrlConnectionReader.getUrlContents(uri);
+					System.out.println("\nWeb Content:\n" + output);
+				}
+
+				break;
+			case 2:
+				System.out.println("Enter URI:");
+				uri = sc.nextLine();
+				
+				System.out.println("Choose HTTP Method:");
+				String method = sc.nextLine();
+				
+				System.out.println("Credential(user:pass) :");
+				String credential = sc.nextLine();
+
+				status = errorMessages.getUrl(uri);
+
+				if (status >= 200 && status < 400) {
+					String output = HttpBasicAuth.getUrlContents(uri, method, credential);;
+					System.out.println("\nWeb Content:\n" + output);
+				}
+
+				break;
+			case 3:
+				String downloadLink = sc.nextLine();
+				// Input Direktori kemana file harus disimpan
+				String dir = sc.nextLine();
+				File out = new File(dir);
+				new Thread(new download(downloadLink, out)).start();
+				// System.out.println("Wednesday");
+				break;
+			default:
+				System.out.println("Wrong input");
 		}
 
 		sc.close();

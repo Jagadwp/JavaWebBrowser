@@ -9,10 +9,38 @@ public class UrlConnectionReader {
 	public static String getUrlContents(String theUrl) {
 		StringBuilder content = new StringBuilder();
 		StringBuilder links = new StringBuilder();
+
 		// Use try and catch to avoid the exceptions
 		try {
 			URL url = new URL(theUrl); // creating a url object
-			URLConnection urlConnection = url.openConnection(); // creating a urlconnection object
+			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+			//Redirector
+			int status = urlConnection.getResponseCode();
+			System.out.println("Request URL ... " + url);
+			boolean redirect = false;
+
+			// normally, 3xx is redirect
+			if (status >= 300 && status < 400) redirect = true;
+			System.out.println("Response Code ... " + status);
+
+			if (redirect) {
+
+				// get redirect url from "location" header field
+				String newUrl = urlConnection.getHeaderField("Location");
+				// get the cookie if need, for login
+				String cookies = urlConnection.getHeaderField("Set-Cookie");
+
+				// open the new connnection again
+				urlConnection = (HttpURLConnection) new URL(newUrl).openConnection();
+				urlConnection.setRequestProperty("Cookie", cookies);
+				urlConnection.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
+				urlConnection.addRequestProperty("User-Agent", "Mozilla");
+				urlConnection.addRequestProperty("Referer", "google.com");
+
+				System.out.println("Redirect to URL : " + newUrl);
+
+			}
 
 			// wrapping the urlconnection in a bufferedreader
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));

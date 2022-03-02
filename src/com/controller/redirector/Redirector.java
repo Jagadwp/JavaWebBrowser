@@ -101,27 +101,27 @@ public class Redirector {
 		}
 	}
 	 
-//	public static void main(String[] args) {
-//		int thePort = 8080;
-//		String theSite;
-//		
-//
-//		try {
-//			theSite = "https://www.caltech.edu/";
-//			// trim trailing slash
-//			if (theSite.endsWith("/")) {
-//				theSite = theSite.substring(0, theSite.length() - 1);
-//			}
-//		} catch (RuntimeException ex) {
-//			System.out.println("Usage: java Redirector http://www.newsite.com/ port");
-//			return;
-//			}
-//		try {
-//			thePort = Integer.parseInt(args[1]);
-//		} catch (RuntimeException ex) {
-//			thePort = 8080;
-//		}
-//		Redirector redirector = new Redirector(theSite, thePort);
-//		redirector.start();
-//	}
+	public static void main(String[] args) {
+		int thePort = 8080;
+		String theSite;
+		
+
+		try {
+			theSite = "http://www.caltech.edu/";
+			// trim trailing slash
+			if (theSite.endsWith("/")) {
+				theSite = theSite.substring(0, theSite.length() - 1);
+			}
+		} catch (RuntimeException ex) {
+			System.out.println("Usage: java Redirector http://www.newsite.com/ port");
+			return;
+			}
+		try {
+			thePort = Integer.parseInt(args[1]);
+		} catch (RuntimeException ex) {
+			thePort = 8080;
+		}
+		Redirector redirector = new Redirector(theSite, thePort);
+		redirector.start();
+	}
 }
