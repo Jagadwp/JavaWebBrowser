@@ -25,7 +25,7 @@ public class errorMessages {
 						"It may indicate a bad link, a document that has moved with no forwarding address, a mistyped URL, or something similar\r\n");
 			} else if (code == 200) {
 				System.out.println("HTTP/1.x " + code + " " + response);
-				System.out.println("You’re Good To Go!\r\n");
+				System.out.println("You are Good To Go!\r\n");
 			} else if (code == 206) {
 				System.out.println("HTTP/1.x " + code + " " + response);
 				System.out.println(

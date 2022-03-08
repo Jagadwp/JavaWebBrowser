@@ -1,6 +1,8 @@
 package com.controller.webcontent;
 
 import java.net.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.*;
@@ -97,6 +99,38 @@ public class UrlConnectionReader {
         }
 
 		return url.toString();
+    }
+
+	public static void UrlContent(String uriInput) {
+        try {
+            Socket socket = new Socket(uriInput, 80);
+            String protocols = "GET / HTTP/1.1\r\nHost: " + uriInput + "\r\n\r\n ";
+            System.out.println(protocols);
+ 
+            BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
+            BufferedOutputStream bos = new BufferedOutputStream(socket.getOutputStream());
+ 
+            bos.write(protocols.getBytes());
+            bos.flush();
+ 
+            int bufferSize = 100;
+            byte[] bResp = new byte[bufferSize];
+            int c = bis.read(bResp);
+            String resp = "";
+ 
+            while(c != -1) {
+                resp += (new String(bResp));
+                bResp = new byte[bufferSize];
+                c = bis.read(bResp);
+ 
+            }
+            System.out.println(resp);
+            // urlNow += resp;
+ 
+            socket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(UrlConnectionReader.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
