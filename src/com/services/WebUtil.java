@@ -1,4 +1,4 @@
-package com.service;
+package com.services;
 
 import java.util.ArrayList;
 import java.util.List;

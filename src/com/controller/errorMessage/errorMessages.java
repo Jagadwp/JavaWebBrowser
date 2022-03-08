@@ -3,8 +3,8 @@ package com.controller.errorMessage;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+// import java.io.InputStreamReader;
+// import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -55,7 +55,7 @@ public class errorMessages {
 			System.out.println();
 			try (InputStream in = new BufferedInputStream(uc.getInputStream())) {
 				// chain the InputStream to a Reader
-				Reader r = new InputStreamReader(in);
+				// Reader r = new InputStreamReader(in);
 			}
 		} catch (MalformedURLException ex) {
 			System.err.println(theUrl + " is not a parseable URL");

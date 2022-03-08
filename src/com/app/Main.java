@@ -1,10 +1,9 @@
 package com.app;
 
-import com.service.*;
-import com.controller.download.download;
-
 import java.util.Scanner;
-import java.io.*;
+
+import com.services.*;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -24,28 +23,48 @@ public class Main {
 			e.printStackTrace();
 		}
 
-		String url;
+		String url, response, statusCode, statusMessage;
 
+		System.out.println("Enter URL:");
+		url = sc.nextLine();
 		switch (featureNumber) {
 			case 1:
-				System.out.println("Enter URL:");
-				url = sc.nextLine();
+				response = Web.makeNormalRequest(url, "");
+				statusCode = WebUtil.getStatusCode(header);
+				statusMessage = WebUtil.getStatusMessage(header);
 
-				String response = Web.makeNormalRequest(url, "");
-				String statusCode = WebUtil.getStatusCode(header);
-				String statusMessage = WebUtil.getStatusMessage(header);
-
+				// System.out.println("header\n:" + header);
 				showOutput(response, statusCode, statusMessage);
 
 				break;
 			case 2:
+				System.out.print("Enter Username:\n");
+				String id = sc.nextLine();
+				System.out.print("Enter Password:\n");
+				String password = sc.nextLine();
+
+				response = Web.makeBasicAuthRequest(url, id, password);
+				statusCode = WebUtil.getStatusCode(header);
+				statusMessage = WebUtil.getStatusMessage(header);
+
+				showOutput(response, statusCode, statusMessage);
 
 				break;
 			case 3:
-				System.out.println("Enter URL:");
-				url = sc.nextLine();
+				System.out.print("Enter Username:\n");
+				id = sc.nextLine();
+				System.out.print("Enter Password:\n");
+				password = sc.nextLine();
 
-				System.out.print("Download Filename\n>");
+				response = Web.makeLoginRequest(url, id, password);
+				statusCode = WebUtil.getStatusCode(header);
+				statusMessage = WebUtil.getStatusMessage(header);
+
+				showOutput(response, statusCode, statusMessage);
+
+				break;
+			case 4:
+				System.out.print("Filename:\n");
 				String filename = sc.nextLine();
 
 				try {
@@ -53,21 +72,14 @@ public class Main {
 				} catch (MalformedURLException e) {
 					e.printStackTrace();
 				}
-				int s = Web.download(url, filename);
 
-				if (s == 1)
-					System.out.println("--Download Success--");
+				boolean success = Web.download(url, filename);
+
+				if (success)
+					System.out.println("Download Success");
 				else
-					System.out.println("--Download Failed--");
+					System.out.println("Download Failed");
 
-				break;
-			case 4:
-				String downloadLink = sc.nextLine();
-				// Input Direktori kemana file harus disimpan
-				String dir = sc.nextLine();
-				File out = new File(dir);
-				new Thread(new download(downloadLink, out)).start();
-				// System.out.println("Wednesday");
 				break;
 			default:
 				System.out.println("Wrong input");
@@ -81,8 +93,8 @@ public class Main {
 		System.out.println("Welcome to Simple Web Browser App\n");
 		System.out.println("Features:");
 		System.out.println(
-				"1. Open Web Page \n" + "2. Open Web Page with Basic Auth\n" + "3. Login\n" + "4. Download File\n");
-		System.out.println("Enter the feature's number to try the feature:");
+				"1. Open Web Page \n2. Open Web Page with Basic Auth\n3. Login\n4. Download File\n");
+		System.out.println("Enter the feature's number to run:");
 	}
 
 	private static void showOutput(String response, String statusCode, String statusMessage) {
@@ -106,11 +118,11 @@ public class Main {
 		Scanner scanner = new Scanner(System.in);
 
 		while (!abort) {
-			System.out.println("What would you like to do?");
+			System.out.println("More Options:");
 			System.out.println("1. Show Clickable Links");
 			System.out.println("2. Show Status Code and Message");
 			System.out.println("3. Make another request URL");
-			System.out.println("Choice > ");
+			System.out.println("Enter the options's number to run:");
 
 			String choice = scanner.nextLine();
 

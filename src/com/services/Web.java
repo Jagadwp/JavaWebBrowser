@@ -1,4 +1,4 @@
-package com.service;
+package com.services;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -121,7 +121,7 @@ public class Web {
 		return makeNormalRequest(absolutePath, cookie);
 	}
 
-	public static int download(String url, String fileName) {
+	public static boolean download(String url, String fileName) {
 
 		String pattern, host = "", path = "";
 		String res = "";
@@ -198,9 +198,9 @@ public class Web {
 			fos.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return 0;
+			return false;
 		}
-		return 1;
+		return true;
 	}
 
 	public static String makeBasicAuthRequest(String url, String id, String password) {
